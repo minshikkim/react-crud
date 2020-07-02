@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 
 class TOC extends Component{
+  constructor(props){
+    super(props);
+
+
+  }
+
+
+    
+
   render(){
     console.log('TOC render');
       var lists = [];
@@ -20,6 +29,14 @@ class TOC extends Component{
                 }.bind(this, data[i].id)}
 
               >{data[i].title}</a>
+              <input 
+                type="button"
+                value="update"
+                onClick={function(id, e){
+                  e.preventDefault();
+                  console.log(id)
+                  this.props.onUpdateItem(id);
+                }.bind(this, data[i].id)}/>
             </li>);
             i = i + 1;
       }

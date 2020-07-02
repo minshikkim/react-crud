@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
-class CreateContent extends Component{
+class UpdateContent extends Component{
   constructor(props){
     super(props);
 
-    this.state = {title: '', desc: ''};
+    this.setState({
+      title: this.props.title,
+      desc: this.props.desc
+    })
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDesc = this.handleChangeDesc.bind(this);
@@ -24,17 +28,15 @@ class CreateContent extends Component{
 
   handleSubmit(event){
     console.log('handleSubmit');
-    this.props.onCreate(this.state.title, this.state.desc)
-    this.setState({title: '', desc: ''})
+    // this.props.onCreate(this.state.title, this.state.desc)
+    // this.setState({title: '', desc: ''})
     event.preventDefault();
   }
-
-
 
   render(){
     return(
       <article>
-        <h2>Create</h2>
+        <h2>Update</h2>
         <form onSubmit={this.handleSubmit}>
         <label>
           title:
@@ -44,12 +46,12 @@ class CreateContent extends Component{
           desc:
           <input type="text" value={this.state.desc} onChange={this.handleChangeDesc} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="update"/>  <input type="reset" value="reset"/>
         </form>
       </article>
     );
   }
 }
 
-export default CreateContent;
+export default UpdateContent;
 
