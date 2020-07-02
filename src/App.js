@@ -25,6 +25,7 @@ class App extends Component{
     this.handleCreate = this.handleCreate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
   }
 
   
@@ -36,7 +37,9 @@ class App extends Component{
       {id: lastId+1, title: _title, desc: _desc}
     )
     this.setState({
-      contents: _contents
+      mode: 'read',
+      contents: _contents,
+      selected_content_id: _contents.length
     })
   }
 
@@ -59,21 +62,23 @@ class App extends Component{
       mode:'update',
       selected_content_id: id
     })
-    // var _contents = [];
-    // _contents = this.state.contents.slice();
-    // _contents.splice(id-1, 1, {
-    //   id: _contents[id-1],
-    //   title: _title,
-    //   desc: _desc
-    // })
   }
 
-  handleChangeUpdateMode(e){
-    
+  handleSubmitUpdate(_title, _desc){
+    console.log(`title : ${_title} \n desc : ${_desc}`);
+    var _contents = this.state.contents.slice();
+    console.log(_contents);
+    var index = this.state.selected_content_id;
+
+    _contents.splice(index-1, 1,
+        { id: index,
+        title: _title,
+        desc: _desc});
+    this.setState({
+      mode: 'read',
+      contents: _contents
+    })
   }
-
-
-  
   
 
   render(){
@@ -105,12 +110,12 @@ class App extends Component{
       case 'create':
         var lastId = this.state.contents.length;
         components = <CreateContent onCreate={this.handleCreate}/>
-
+        break;
       case 'update':
         var id = this.state.selected_content_id;
         var _title = this.state.contents[id-1].title; 
         var _desc = this.state.contents[id-1].desc;
-        components = <UpdateContent title={_title} desc={_desc}/>
+        components = <UpdateContent title={_title} desc={_desc} onSubmititem={this.handleSubmitUpdate}/>
       default:
         break;
     }
@@ -140,7 +145,8 @@ class App extends Component{
               mode:'read',
               selected_content_id:Number(id)
             })
-          }.bind(this)} onUpdateItem={this.handleUpdate}
+          }.bind(this)} 
+          onUpdateItem={this.handleUpdate}
         ></TOC>
         <Controller onChangeMode={function(_mode){
           console.log(_mode);

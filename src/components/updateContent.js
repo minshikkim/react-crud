@@ -4,10 +4,11 @@ class UpdateContent extends Component{
   constructor(props){
     super(props);
 
-    this.setState({
-      title: this.props.title,
-      desc: this.props.desc
-    })
+    this.state = {
+      title:this.props.title,
+      desc:this.props.desc
+    }
+    
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,8 +29,8 @@ class UpdateContent extends Component{
 
   handleSubmit(event){
     console.log('handleSubmit');
-    // this.props.onCreate(this.state.title, this.state.desc)
-    // this.setState({title: '', desc: ''})
+    this.props.onSubmititem(this.state.title, this.state.desc)
+    this.setState({title: '', desc: ''})
     event.preventDefault();
   }
 
@@ -44,9 +45,9 @@ class UpdateContent extends Component{
         </label>
         <label>
           desc:
-          <input type="text" value={this.state.desc} onChange={this.handleChangeDesc} />
+          <textarea type="text" value={this.state.desc} onChange={this.handleChangeDesc} />
         </label>
-        <input type="submit" value="update"/>  <input type="reset" value="reset"/>
+        <input type="submit" value="update"/>
         </form>
       </article>
     );
